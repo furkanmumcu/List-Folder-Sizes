@@ -16,8 +16,8 @@ Function ListFolderSizes($path, [boolean]$sortBySize){
         #get folder sizes
         #$sizes[$i] = "{0:N2}" -f ((Get-ChildItem -path $newpath -recurse -File | Measure-Object -property length -sum ).sum /1MB) --one line
         $unformatted = ((Get-ChildItem -path $newpath -recurse -File | Measure-Object -property length -sum ).sum /1MB) #unformatted used for calculation of sum
-        $formatted = "{0:N2}" -f $unformatted
-        $sizes[$i] = $formatted
+        $formatted = "{0:N2}" -f $unformatted #because of this, value becomes string
+        $sizes[$i] = [double]$formatted #[double]: converts string into double, so list will be sorted correctly
         
         #calculate sum
         $sum = $sum + $unformatted
